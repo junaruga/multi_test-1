@@ -5,6 +5,11 @@ module MultiTest
     end
 
     if defined?(Minitest)
+      Minitest.instance_eval do
+        def run(*)
+        end
+      end
+
       if defined?(Minitest::Unit)
         Minitest::Unit.class_eval do
           def run(*)
