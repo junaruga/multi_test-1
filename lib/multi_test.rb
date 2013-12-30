@@ -7,6 +7,7 @@ module MultiTest
     if defined?(Minitest)
       Minitest.instance_eval do
         def run(*)
+          0 # exit code
         end
       end
 
