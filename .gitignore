@@ -3,3 +3,4 @@ gemfiles/**/vendor
 pkg/*.*
 *.swo
 *.swn
+*.bundle
