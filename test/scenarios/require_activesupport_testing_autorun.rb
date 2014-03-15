@@ -4,8 +4,7 @@ require "multi_test"
 MultiTest.disable_autorun
 
 # Now we create the world
-world = Object.new
-MultiTest.extend_with_best_assertion_library(world)
+MultiTest.extend_with_best_assertion_library(self)
 
 # Now we execute a scenario and assert something
-world.assert_equal(1,1)
+assert_equal(1,1)
