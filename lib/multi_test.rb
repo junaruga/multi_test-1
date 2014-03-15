@@ -27,17 +27,28 @@ module MultiTest
   end
 
   def self.extend_with_best_assertion_library(object)
-    if defined?(Test::Unit::Assertions)
+    begin
+      require 'test/unit/assertions'
       object.extend(Test::Unit::Assertions)
-    end
-
-    if defined?(Minitest::Assertions)
-      object.extend(MinitestWorld)
+    rescue LoadError
     end
 
     begin
-    require 'rspec/expectations'
-    object.extend(::RSpec::Matchers)
+      require 'minitest/assertions'
+      object.extend(MinitestWorld)
+    rescue LoadError
+    end
+
+    begin
+      require 'minitest/unit'
+      object.extend(MinitestWorld)
+    rescue LoadError
+    end
+
+
+    begin
+      require 'rspec/expectations'
+      object.extend(::RSpec::Matchers)
     rescue LoadError
       # do nothing
     end
