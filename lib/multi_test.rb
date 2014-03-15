@@ -27,6 +27,21 @@ module MultiTest
   end
 
   def self.extend_with_best_assertion_library(object)
-    object.extend(Test::Unit::Assertions)
+    if defined?(Test::Unit::Assertions)
+      object.extend(Test::Unit::Assertions)
+    end
+
+    if defined?(Minitest::Assertions)
+      object.extend(MinitestWorld)
+    end
+  end
+
+  module MinitestWorld
+    def self.extended(base)
+      base.extend(MiniTest::Assertions)
+      base.assertions = 0
+    end
+
+    attr_accessor :assertions
   end
 end
