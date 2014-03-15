@@ -25,4 +25,8 @@ module MultiTest
       end
     end
   end
+
+  def self.extend_with_best_assertion_library(object)
+    object.extend(Test::Unit::Assertions)
+  end
 end
