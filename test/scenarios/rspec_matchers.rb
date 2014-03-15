@@ -1,10 +1,4 @@
-# Imagine this is your rails app
-require 'rspec'
-
-# Now cucumber loads
-require "multi_test"
-MultiTest.disable_autorun
-
+require 'multi_test'
 # Now we create the world
 MultiTest.extend_with_best_assertion_library(self)
 

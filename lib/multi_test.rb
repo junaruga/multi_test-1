@@ -41,6 +41,17 @@ module MultiTest
     rescue LoadError
       # do nothing
     end
+
+    begin
+      require 'spec/expectations'
+      require 'spec/runner/differs/default'
+      require 'ostruct'
+      options = OpenStruct.new(:diff_format => :unified, :context_lines => 3)
+      Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
+      object.extend(Spec::Matchers)
+    rescue LoadError
+      # do nothing
+    end
   end
 
   module MinitestWorld
