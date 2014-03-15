@@ -26,51 +26,56 @@ module MultiTest
     end
   end
 
-  def self.extend_with_best_assertion_library(object)
-    begin
-      require 'test/unit/assertions'
-      object.extend(Test::Unit::Assertions)
-    rescue LoadError
-    end
-
-    begin
-      require 'minitest/assertions'
-      object.extend(MinitestWorld)
-    rescue LoadError
-    end
-
-    begin
-      require 'minitest/unit'
-      object.extend(MinitestWorld)
-    rescue LoadError
-    end
-
-
-    begin
-      require 'rspec/expectations'
-      object.extend(::RSpec::Matchers)
-    rescue LoadError
-      # do nothing
-    end
-
-    begin
-      require 'spec/expectations'
-      require 'spec/runner/differs/default'
-      require 'ostruct'
-      options = OpenStruct.new(:diff_format => :unified, :context_lines => 3)
-      Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
-      object.extend(Spec::Matchers)
-    rescue LoadError
-      # do nothing
-    end
-  end
-
   module MinitestWorld
     def self.extended(base)
-      base.extend(MiniTest::Assertions)
+      base.extend(Minitest::Assertions)
       base.assertions = 0
     end
 
     attr_accessor :assertions
   end
+
+  def self.extend_with_best_assertion_library(object)
+    extenders = [
+      [
+        proc { require 'rspec/expectations' },
+        proc { object.extend(::RSpec::Matchers) },
+      ],
+      [
+        proc { require 'minitest/assertions' },
+        proc { object.extend(MinitestWorld) },
+      ],
+      [
+        proc { require 'minitest/unit' },
+        proc { object.extend(MinitestWorld) },
+      ],
+      [
+        proc {
+          require 'spec/expectations'
+          require 'spec/runner/differs/default'
+          require 'ostruct'
+        },
+        proc {
+          options = OpenStruct.new(:diff_format => :unified, :context_lines => 3)
+          Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
+          object.extend(Spec::Matchers)
+        },
+      ],
+      [
+        proc { require 'test/unit/assertions' },
+        proc { object.extend(Test::Unit::Assertions) },
+      ],
+    ]
+    e = extenders.detect do |requirer, extender|
+      begin
+        requirer.call
+        true
+      rescue LoadError
+        false
+      end
+    end
+
+    e.last.call(object)
+  end
+
 end
