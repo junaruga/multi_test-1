@@ -34,6 +34,13 @@ module MultiTest
     if defined?(Minitest::Assertions)
       object.extend(MinitestWorld)
     end
+
+    begin
+    require 'rspec/expectations'
+    object.extend(::RSpec::Matchers)
+    rescue LoadError
+      # do nothing
+    end
   end
 
   module MinitestWorld
