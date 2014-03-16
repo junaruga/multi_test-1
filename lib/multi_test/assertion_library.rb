@@ -30,7 +30,7 @@ module MultiTest
       @available ||= [
         AssertionLibrary.new(
           proc { require 'rspec/expectations' },
-          proc { |object| object.extend(::RSpec::Matchers) },
+          proc { |object| object.extend(::RSpec::Matchers) }
         ),
         AssertionLibrary.new(
           proc {
@@ -42,19 +42,19 @@ module MultiTest
             options = OpenStruct.new(:diff_format => :unified, :context_lines => 3)
             Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
             object.extend(Spec::Matchers)
-          },
+          }
         ),
         AssertionLibrary.new(
           proc { require 'minitest/assertions' },
-          proc { |object| object.extend(MinitestWorld) },
+          proc { |object| object.extend(MinitestWorld) }
         ),
         AssertionLibrary.new(
           proc { require 'minitest/unit' },
-          proc { |object| object.extend(MiniTest::Assertions) },
+          proc { |object| object.extend(MiniTest::Assertions) }
         ),
         AssertionLibrary.new(
           proc { require 'test/unit/assertions' },
-          proc { |object| object.extend(Test::Unit::Assertions) },
+          proc { |object| object.extend(Test::Unit::Assertions) }
         ),
       ]
     end
