@@ -42,14 +42,6 @@ module MultiTest
         proc { object.extend(::RSpec::Matchers) },
       ],
       [
-        proc { require 'minitest/assertions' },
-        proc { object.extend(MinitestWorld) },
-      ],
-      [
-        proc { require 'minitest/unit' },
-        proc { object.extend(MinitestWorld) },
-      ],
-      [
         proc {
           require 'spec/expectations'
           require 'spec/runner/differs/default'
@@ -60,6 +52,14 @@ module MultiTest
           Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
           object.extend(Spec::Matchers)
         },
+      ],
+      [
+        proc { require 'minitest/assertions' },
+        proc { object.extend(MinitestWorld) },
+      ],
+      [
+        proc { require 'minitest/unit' },
+        proc { object.extend(MinitestWorld) },
       ],
       [
         proc { require 'test/unit/assertions' },
