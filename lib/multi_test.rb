@@ -37,11 +37,11 @@ module MultiTest
 
   def self.extend_with_best_assertion_library(object)
     extenders = [
-      [
+      AssertionLibrary.new(
         proc { require 'rspec/expectations' },
         proc { object.extend(::RSpec::Matchers) },
-      ],
-      [
+      ),
+      AssertionLibrary.new(
         proc {
           require 'spec/expectations'
           require 'spec/runner/differs/default'
@@ -52,30 +52,41 @@ module MultiTest
           Spec::Expectations.differ = Spec::Expectations::Differs::Default.new(options)
           object.extend(Spec::Matchers)
         },
-      ],
-      [
+      ),
+      AssertionLibrary.new(
         proc { require 'minitest/assertions' },
         proc { object.extend(MinitestWorld) },
-      ],
-      [
+      ),
+      AssertionLibrary.new(
         proc { require 'minitest/unit' },
         proc { object.extend(MinitestWorld) },
-      ],
-      [
+      ),
+      AssertionLibrary.new(
         proc { require 'test/unit/assertions' },
         proc { object.extend(Test::Unit::Assertions) },
-      ],
+      ),
     ]
-    e = extenders.detect do |requirer, extender|
+    e = extenders.detect(&:require?).extend_world(object)
+  end
+
+  class AssertionLibrary
+    def initialize(requirer, extender)
+      @requirer = requirer
+      @extender = extender
+    end
+
+    def require?
       begin
-        requirer.call
+        @requirer.call
         true
       rescue LoadError
         false
       end
     end
 
-    e.last.call(object)
+    def extend_world(world)
+      @extender.call(world)
+    end
   end
 
 end
