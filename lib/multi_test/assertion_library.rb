@@ -50,7 +50,7 @@ module MultiTest
         ),
         AssertionLibrary.new(
           proc { require 'minitest/unit' },
-          proc { |object| object.extend(MinitestWorld) },
+          proc { |object| object.extend(MiniTest::Assertions) },
         ),
         AssertionLibrary.new(
           proc { require 'test/unit/assertions' },
