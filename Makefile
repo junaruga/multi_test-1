@@ -1,5 +1,3 @@
-GEMFILES=$(shell ls ./gemfiles/**/Gemfile)
-
 all: 
 	./test/all
 
