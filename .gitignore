@@ -1,5 +1,4 @@
-gemfiles/**/*.lock
-gemfiles/**/vendor
+test/gemfiles/**/vendor
 pkg/*.*
 *.swo
 *.swn
