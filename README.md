@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cucumber/multi_test.png?branch=master)](https://travis-ci.org/cucumber/multi_test)
+[![Build Status](https://travis-ci.org/cucumber/multi_test.svg?branch=master)](https://travis-ci.org/cucumber/multi_test)
 
 This project gives you a uniform interface onto whatever testing library has been
 loaded into a running Ruby process.
