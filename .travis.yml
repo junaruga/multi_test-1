@@ -1,5 +1,5 @@
 before_install:
-  gem install bundler
+  - gem install bundler
 rvm:
   - 2.3.8
   - 2.4.5
