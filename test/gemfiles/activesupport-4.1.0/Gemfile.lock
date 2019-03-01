@@ -19,6 +19,3 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (= 4.1.16)
-
-BUNDLED WITH
-   1.14.3

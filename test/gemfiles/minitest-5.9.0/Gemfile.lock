@@ -8,6 +8,3 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (= 5.9.0)
-
-BUNDLED WITH
-   1.13.0
