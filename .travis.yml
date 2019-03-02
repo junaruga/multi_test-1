@@ -10,7 +10,7 @@ script: make
 matrix:
   include:
     - rvm: jruby-9.2.6.0
-      env: EXCLUDED_DIRS="activesupport-5.0.0"
+      env: EXCLUDED_DIRS=""
   allow_failures:
     - rvm: ruby-head
   fast_finish: true
