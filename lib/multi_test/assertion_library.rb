@@ -68,7 +68,7 @@ module MultiTest
             # New version test-unit has the alias method.
             # https://github.com/test-unit/test-unit/blob/master/lib/test/unit/assertions.rb#L287
             unless Test::Unit::Assertions.method_defined?(:assert_raises)
-              Test::Unit::Assertions.alias_method :assert_raises, :assert_raise
+              Test::Unit::Assertions.alias_method(:assert_raises, :assert_raise)
             end
             object.extend(Test::Unit::Assertions)
           end
