@@ -1,5 +1,10 @@
 before_install:
-  - gem install bundler
+  - |
+    if ruby -e "exit(RUBY_ENGINE == 'ruby' && Gem.ruby_version < Gem::Version.new('2.3.0'))"; then
+      gem install bundler -v '< 2'
+    else
+      gem install bundler
+    fi
 rvm:
   - 2.3.8
   - 2.4.5
@@ -9,6 +14,8 @@ rvm:
 script: make
 matrix:
   include:
+    - rvm: 2.0.0
+      env: EXCLUDED_DIRS="activesupport-5"
     - rvm: jruby-9.2.6.0
       env: EXCLUDED_DIRS=""
   allow_failures:
